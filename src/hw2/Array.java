@@ -3,7 +3,7 @@ package hw2;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Array{
+public class Array {
 
     private int arr[];
     private int size;
@@ -25,8 +25,8 @@ public class Array{
         }
     }
 
-    public Array clone(){
-        return new Array(Arrays.copyOf(this.arr,this.arr.length));
+    public Array clone() {
+        return new Array(Arrays.copyOf(this.arr, this.arr.length));
     }
 
     public Array(int capacity, boolean generate) {
@@ -140,38 +140,42 @@ public class Array{
     }
 
     public void sortBubble() {
+        int count = 0;
         long time = System.nanoTime();
 
         for (int i = 0; i < size; i++) {
 
             for (int j = 0; j < size - 1; j++) {
+                count++;
                 if (arr[j] > arr[j + 1])
                     swap(j, j + 1);
             }
         }
         isSorted = true;
         time = System.nanoTime() - time;
-        System.out.printf("SortBubble Elapsed %,9.3f ms\n", time / 1_000_000.0);
+        System.out.printf("SortBubble Elapsed %,9.3f ms Count = %d\n", time / 1_000_000.0, count);
     }
 
     public void mysortBubble() {
+        int count = 0;
         long time = System.nanoTime();
         boolean wasSwapped = false;
 
 
-        for (int i = 0; i < size/2; i++) {
-            if(i>0 && !wasSwapped)
+        for (int i = 0; i < size / 2; i++) {
+            if (i > 0 && !wasSwapped)
                 break;
-            wasSwapped=false;
-            for (int j = i; j < size - i-1; j++) {
-
+            wasSwapped = false;
+            for (int j = i; j < size - i - 1; j++) {
+                count++;
                 if (arr[j] > arr[j + 1]) {
                     swap(j, j + 1);
                     wasSwapped = true;
                 }
 
             }
-            for (int z = size - i-2; z > i; z--) {
+            for (int z = size - i - 2; z > i; z--) {
+                count++;
                 if (arr[z] < arr[z - 1]) {
                     swap(z, z - 1);
                     wasSwapped = true;
@@ -182,24 +186,28 @@ public class Array{
 
         isSorted = true;
         time = System.nanoTime() - time;
-        System.out.printf("MySortBubble Elapsed %,9.3f ms\n", time / 1_000_000.0);
+        System.out.printf("MySortBubble Elapsed %,9.3f ms Count = %d\n", time / 1_000_000.0, count);
     }
 
     public void sortSelect() {
+        int count = 0;
         long time = System.nanoTime();
         for (int flag = 0; flag < size; flag++) {
             int cMin = flag;
-            for (int rem = flag + 1; rem < size; rem++)
+            for (int rem = flag + 1; rem < size; rem++) {
+                count++;
                 if (arr[rem] < arr[cMin])
                     cMin = rem;
+            }
             swap(flag, cMin);
         }
         isSorted = true;
         time = System.nanoTime() - time;
-        System.out.printf("SortSelect Elapsed %,9.3f ms\n", time / 1_000_000.0);
+        System.out.printf("SortSelect Elapsed %,9.3f ms Count = %d\n", time / 1_000_000.0, count);
     }
 
     public void sortInsert() {
+        int count = 0;
         long time = System.nanoTime();
         for (int out = 0; out < size; out++) {
             int temp = arr[out];
@@ -207,11 +215,44 @@ public class Array{
             while (in > 0 && arr[in - 1] >= temp) {
                 arr[in] = arr[in - 1];
                 in--;
+                count++;
             }
             arr[in] = temp;
         }
         isSorted = true;
         time = System.nanoTime() - time;
-        System.out.printf("SortInsert Elapsed %,9.3f ms\n", time / 1_000_000.0);
+        System.out.printf("SortInsert Elapsed %,9.3f ms Count = %d\n", time / 1_000_000.0, count);
+    }
+
+    public void countSort() {
+        int count=0;
+        long time = System.nanoTime();
+        int min, max;
+        min = max = this.arr[0];
+        for (int i = 0; i < this.arr.length; i++) {
+            count++;
+            if (min > this.arr[i]) min = this.arr[i];
+            if (max < this.arr[i]) max = this.arr[i];
+        }
+        int arrCountSort[] = new int[max + 1];
+
+        for (int i = 0; i < this.arr.length; i++) {
+            count++;
+            arrCountSort[this.arr[i]]++;
+        }
+        int countArrItem = 0;
+        for (int i = 0; i < arrCountSort.length; i++) {
+            for (int j = arrCountSort[i]; j > 0; j--) {
+                count++;
+                arr[countArrItem] = i;
+                countArrItem++;
+            }
+        }
+
+
+        isSorted = true;
+        time = System.nanoTime() - time;
+        System.out.printf("countSort Elapsed %,9.3f ms Count = %d\n", time / 1_000_000.0, count);
+
     }
 }

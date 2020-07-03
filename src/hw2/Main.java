@@ -13,10 +13,11 @@ public class Main {
         arr = new int[5];
         int[] arr2 = {1, 2, 3, 4};
 
-        Array a1 = new Array(800, true);
+        Array a1 = new Array(10, true);
         Array a2 = a1.clone();
         Array a3 = a1.clone();
         Array a4 = a1.clone();
+        Array a5 = a1.clone();
         a1.sortBubble();
         System.out.println(a1);
         a2.mysortBubble();
@@ -25,6 +26,8 @@ public class Main {
         System.out.println(a3);
         a4.sortSelect();
         System.out.println(a4);
+        a5.countSort();
+        System.out.println(a5);
 
     }
 }
