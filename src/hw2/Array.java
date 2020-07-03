@@ -1,6 +1,10 @@
 package hw2;
 
-public class Array {
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class Array{
+
     private int arr[];
     private int size;
     private boolean isSorted;
@@ -15,6 +19,26 @@ public class Array {
         this.size = 0;
     }
 
+    private void generate(int capacity) {
+        for (int i = 0; i < capacity; i++) {
+            arr[i] = ThreadLocalRandom.current().nextInt(0, 100);
+        }
+    }
+
+    public Array clone(){
+        return new Array(Arrays.copyOf(this.arr,this.arr.length));
+    }
+
+    public Array(int capacity, boolean generate) {
+        this();
+        arr = new int[capacity];
+        if (generate) {
+            generate(capacity);
+            size = capacity;
+        }
+
+    }
+
     public Array(int... args) {
         this();
         this.size = args.length;
@@ -27,7 +51,7 @@ public class Array {
         return arr[index];
     }
 
-    public void set (int index, int value) {
+    public void set(int index, int value) {
         if (index >= size || index < 0)
             throw new ArrayIndexOutOfBoundsException(index);
         arr[index] = value;
@@ -116,17 +140,53 @@ public class Array {
     }
 
     public void sortBubble() {
-        boolean wasSwapped=true;
+        long time = System.nanoTime();
+
         for (int i = 0; i < size; i++) {
+
             for (int j = 0; j < size - 1; j++) {
                 if (arr[j] > arr[j + 1])
                     swap(j, j + 1);
             }
         }
         isSorted = true;
+        time = System.nanoTime() - time;
+        System.out.printf("SortBubble Elapsed %,9.3f ms\n", time / 1_000_000.0);
+    }
+
+    public void mysortBubble() {
+        long time = System.nanoTime();
+        boolean wasSwapped = false;
+
+
+        for (int i = 0; i < size/2; i++) {
+            if(i>0 && !wasSwapped)
+                break;
+            wasSwapped=false;
+            for (int j = i; j < size - i-1; j++) {
+
+                if (arr[j] > arr[j + 1]) {
+                    swap(j, j + 1);
+                    wasSwapped = true;
+                }
+
+            }
+            for (int z = size - i-2; z > i; z--) {
+                if (arr[z] < arr[z - 1]) {
+                    swap(z, z - 1);
+                    wasSwapped = true;
+                }
+            }
+        }
+
+
+        isSorted = true;
+        time = System.nanoTime() - time;
+        System.out.printf("MySortBubble Elapsed %,9.3f ms\n", time / 1_000_000.0);
     }
 
     public void sortSelect() {
+        long time = System.nanoTime();
         for (int flag = 0; flag < size; flag++) {
             int cMin = flag;
             for (int rem = flag + 1; rem < size; rem++)
@@ -135,9 +195,12 @@ public class Array {
             swap(flag, cMin);
         }
         isSorted = true;
+        time = System.nanoTime() - time;
+        System.out.printf("SortSelect Elapsed %,9.3f ms\n", time / 1_000_000.0);
     }
 
     public void sortInsert() {
+        long time = System.nanoTime();
         for (int out = 0; out < size; out++) {
             int temp = arr[out];
             int in = out;
@@ -148,5 +211,7 @@ public class Array {
             arr[in] = temp;
         }
         isSorted = true;
+        time = System.nanoTime() - time;
+        System.out.printf("SortInsert Elapsed %,9.3f ms\n", time / 1_000_000.0);
     }
 }
