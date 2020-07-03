@@ -82,6 +82,15 @@ public class Array {
         return arr[--size];
     }
 
+    public void deleteIndex(int index){
+        int newSize=--size;
+        int[] newArr=new int[newSize];
+        System.arraycopy(this.arr,0,newArr,0,index-1);
+        System.arraycopy(this.arr,index,newArr,index-1,(this.arr.length-index));
+        this.arr=newArr;
+
+    }
+
     // homework
     // insert(index, value);
     // delete(val);
