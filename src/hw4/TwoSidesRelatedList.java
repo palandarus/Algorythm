@@ -2,11 +2,11 @@ package hw4;
 
 import java.util.Objects;
 
-public class RelatedList {
-
+public class TwoSidesRelatedList {
     private class Node {
         Cat c;
         Node next;
+        Node prev;
 
         public Node(Cat c) {
             this.c = c;
@@ -34,7 +34,7 @@ public class RelatedList {
     private Node head;
     private int size;
 
-    public RelatedList() {
+    public TwoSidesRelatedList() {
         head = null;
         size = 0;
     }
@@ -45,6 +45,7 @@ public class RelatedList {
 
     public void push(Cat c) {
         Node n = new Node(c);
+        head.prev=n;
         n.next = head;
         head = n;
         size++;
@@ -54,6 +55,7 @@ public class RelatedList {
         if (isEmpty()) return null;
         Cat temp = head.c;
         head = head.next;
+        head.prev=null;
         size--;
         return temp;
     }
@@ -104,5 +106,4 @@ public class RelatedList {
         }
         return true;
     }
-
 }
