@@ -28,6 +28,8 @@ public class Main {
         System.out.println(a4);
         a5.countSort();
         System.out.println(a5);
+        a5.deleteIndex(5);
+        System.out.println(a5);
 
     }
 }
