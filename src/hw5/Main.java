@@ -70,7 +70,6 @@ public class Main {
                 y >= 0 && y < desk[0].length &&
                 desk[x][y] == 0;
     }
-
     private static int op = 0;
     private static boolean knightMove(int[][] desk, int currX, int currY, int move) {
         desk[currX][currY] = move;
