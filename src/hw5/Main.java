@@ -46,9 +46,13 @@ public class Main {
         knightMove(desk, 1, 0, 1);
         printDesk(desk);
         System.out.println(op);
-
+        op=0;
         System.out.println("Hanoi");
-        Hanoi(3,1,2,3);
+        Hanoi(8,1,2,3);
+        System.out.println(op);
+        Queens eighthQueens=new Queens(8);
+        eighthQueens.solve();
+        System.out.println(eighthQueens);
     }
 
     // F(x, 0) = 1
@@ -101,9 +105,11 @@ public class Main {
     }
 
     private static boolean Hanoi(int diskQuantity, int from, int to, int help){
+
         if(diskQuantity>0){
+            op++;
             Hanoi(diskQuantity-1, from,help,to);
-            System.out.println(from+" => "+to);
+            System.out.println("Перемещаем диск с "+from+" стержня на ==> "+to+" стержень");
             Hanoi(diskQuantity-1, help, to, from);
         }
         return true;
