@@ -35,8 +35,8 @@ public class Main {
         System.out.println();
         recPrint(5);
         System.out.println();
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 6; j++) {
                 System.out.printf("%6d", routes(i, j));
             }
             System.out.println();
@@ -46,6 +46,9 @@ public class Main {
         knightMove(desk, 1, 0, 1);
         printDesk(desk);
         System.out.println(op);
+
+        System.out.println("Hanoi");
+        Hanoi(3,1,2,3);
     }
 
     // F(x, 0) = 1
@@ -96,6 +99,18 @@ public class Main {
             System.out.println();
         }
     }
+
+    private static boolean Hanoi(int diskQuantity, int from, int to, int help){
+        if(diskQuantity>0){
+            Hanoi(diskQuantity-1, from,help,to);
+            System.out.println(from+" => "+to);
+            Hanoi(diskQuantity-1, help, to, from);
+        }
+        return true;
+    }
+
+
+
 
     // + King routes
     // o chess Knight
