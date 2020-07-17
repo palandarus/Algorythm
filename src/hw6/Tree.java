@@ -176,6 +176,11 @@ public class Tree {
         return false;
     }
 
+    public boolean isRootBalanced(boolean precision){
+        return Math.abs(height(root.left)-height(root.right))
+                <=((precision) ? 0:1);
+    }
+
     public int height(TreeNode treeNode) {
         if (treeNode == null) {
             return 0;
