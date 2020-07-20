@@ -63,27 +63,42 @@ public class Graph {
             int v = getUnvisitedVertex(stack.peek());
             if (v == -1) {
                 stack.pop();
+                System.out.println("return");
             } else {
                 vertexList[v].wasVisited = true;
                 displayVertex(v);
                 stack.push(v);
             }
         }
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                System.out.print(" " + adjMatrix[i][j] + " ");
+            }
+            System.out.println();
+        }
         resetFlags();
     }
 
-    public void widthTraverse() {
+    public void widthTraverse(int findVertex) {
         Queue queue = new Queue(MAX_VERTICES);
         vertexList[0].wasVisited = true;
         displayVertex(0);
         queue.insert(0);
+
         while (!queue.isEmpty()) {
             int vCurrent = queue.remove();
             displayVertex(vCurrent);
             int vNext;
             while ((vNext = getUnvisitedVertex(vCurrent)) != -1) {
+                if (findVertex == vNext)
+                    System.out.println("Done");
                 vertexList[vNext].wasVisited = true;
+                if (findVertex == vNext) {
+                    System.out.println("Done");
+                    break;
+                }
                 queue.insert(vNext);
+
             }
         }
 
@@ -94,4 +109,6 @@ public class Graph {
             vertexList[i].wasVisited = false;
         }
     }
+
+
 }
